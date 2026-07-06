@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- ==================== HEAD FRAGMENT ==================== -->
+<head th:fragment="head(title)">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Viva Goa - Authentic Goan Cuisine, Continental, Chinese &amp; Indian. Serving for 24 Years in Colva, Goa."/>
+    <meta name="keywords" content="Viva Goa, Goan food, Colva restaurant, seafood, Goa restaurant"/>
+    <title th:text="${title} ? ${title} + ' | Viva Goa' : 'Viva Goa - Authentic Goan Cuisine'">Viva Goa</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Font Awesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+
+    <style>
+        /* ===== CSS Variables ===== */
+        :root {
+            --primary: #E8571E;
+            --secondary: #2E8B3D;
+            --dark: #1A1A1A;
+            --accent: #F5A623;
+            --light: #FFF8F0;
+            --primary-rgb: 232, 87, 30;
+            --secondary-rgb: 46, 139, 61;
+            --accent-rgb: 245, 166, 35;
+        }
+
+        /* ===== Base ===== */
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6,
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        a { color: var(--primary); transition: color .3s; }
+        a:hover { color: var(--accent); }
+
+        ::selection {
+            background: rgba(var(--primary-rgb), .25);
+        }
+
+        /* ===== Scrollbar ===== */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+        /* ===== Buttons ===== */
+        .btn-primary-vg {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: .75rem 2rem;
+            font-weight: 600;
+            border-radius: 4px;
+            letter-spacing: .5px;
+            transition: all .3s;
+        }
+        .btn-primary-vg:hover {
+            background: #c9451a;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(var(--primary-rgb), .35);
+        }
+
+        .btn-outline-vg {
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: .7rem 2rem;
+            font-weight: 600;
+            border-radius: 4px;
+            background: transparent;
+            transition: all .3s;
+        }
+        .btn-outline-vg:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary-vg {
+            background: var(--secondary);
+            color: #fff;
+            border: none;
+            padding: .75rem 2rem;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all .3s;
+        }
+        .btn-secondary-vg:hover {
+            background: #246e31;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* ===== Navbar ===== */
+        .navbar-vg {
+            background: rgba(26, 26, 26, .95) !important;
+            backdrop-filter: blur(10px);
+            padding: .6rem 0;
+            transition: all .4s;
+            border-bottom: 2px solid transparent;
+        }
+        .navbar-vg.scrolled {
+            padding: .4rem 0;
+            border-bottom-color: var(--primary);
+            box-shadow: 0 4px 20px rgba(0,0,0,.3);
+        }
+        .navbar-vg .navbar-brand img {
+            height: 40px;
+            border-radius: 4px;
+        }
+        .navbar-vg .navbar-brand span {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--accent);
+            margin-left: .5rem;
+        }
+        .navbar-vg .nav-link {
+            color: rgba(255,255,255,.8) !important;
+            font-weight: 500;
+            font-size: .95rem;
+            padding: .5rem 1rem !important;
+            position: relative;
+            transition: color .3s;
+        }
+        .navbar-vg .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: all .3s;
+            transform: translateX(-50%);
+        }
+        .navbar-vg .nav-link:hover,
+        .navbar-vg .nav-link.active {
+            color: var(--primary) !important;
+        }
+        .navbar-vg .nav-link:hover::after,
+        .navbar-vg .nav-link.active::after {
+            width: 60%;
+        }
+        .navbar-toggler {
+            border-color: rgba(var(--primary-rgb), .5) !important;
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(232,87,30,0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+        }
+
+        /* ===== Hero Banners ===== */
+        .page-hero {
+            position: relative;
+            min-height: 45vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: var(--dark);
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(26,26,26,.7) 0%, rgba(26,26,26,.85) 100%);
+            z-index: 1;
+        }
+        .page-hero > * { position: relative; z-index: 2; }
+        .page-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 2px 2px 8px rgba(0,0,0,.5);
+        }
+        .page-hero .breadcrumb-vg {
+            color: rgba(255,255,255,.7);
+            font-size: .95rem;
+        }
+        .page-hero .breadcrumb-vg a { color: var(--accent); }
+        .page-hero .accent-line {
+            width: 80px;
+            height: 3px;
+            background: var(--primary);
+            margin: 1rem auto;
+        }
+
+        /* ===== Section Styles ===== */
+        .section-padding { padding: 5rem 0; }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: .5rem;
+        }
+        .section-subtitle {
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        .accent-line-left {
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* ===== Footer ===== */
+        .footer-vg {
+            background: var(--dark);
+            color: rgba(255,255,255,.75);
+            padding: 4rem 0 0;
+        }
+        .footer-vg h5 {
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            font-size: 1.15rem;
+        }
+        .footer-vg a {
+            color: rgba(255,255,255,.65);
+            text-decoration: none;
+            transition: all .3s;
+        }
+        .footer-vg a:hover {
+            color: var(--primary);
+            padding-left: 4px;
+        }
+        .footer-vg .footer-links li {
+            margin-bottom: .5rem;
+        }
+        .footer-vg .footer-links li::before {
+            content: '\f105';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            margin-right: .5rem;
+            color: var(--primary);
+            font-size: .8rem;
+        }
+        .footer-vg .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.2);
+            margin-right: .5rem;
+            color: #fff;
+            font-size: 1rem;
+            transition: all .3s;
+        }
+        .footer-vg .social-icons a:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            padding-left: 0;
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,.1);
+            padding: 1.25rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            font-size: .9rem;
+            color: rgba(255,255,255,.45);
+        }
+
+        /* ===== Cards ===== */
+        .card-vg {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,.08);
+            transition: all .4s;
+            background: #fff;
+        }
+        .card-vg:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 35px rgba(0,0,0,.15);
+        }
+
+        /* ===== Animations ===== */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all .7s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== Form Styles ===== */
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 .2rem rgba(var(--primary-rgb), .2);
+        }
+
+        /* ===== Utility ===== */
+        .text-primary-vg { color: var(--primary) !important; }
+        .text-secondary-vg { color: var(--secondary) !important; }
+        .text-accent { color: var(--accent) !important; }
+        .bg-dark-vg { background-color: var(--dark) !important; }
+        .bg-light-vg { background-color: var(--light) !important; }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .page-hero h1 { font-size: 2.2rem; }
+            .section-title { font-size: 2rem; }
+            .section-padding { padding: 3rem 0; }
+        }
+    </style>
+</head>
+
+
+<!-- ==================== HEADER FRAGMENT ==================== -->
+<header th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-vg fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+                <img th:src="@{/images/gallery/logo.jpg}" alt="Viva Goa Logo"/>
+                <span>Viva Goa</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                    aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}" th:classappend="${#strings.equals(activeNav, 'home')} ? 'active'">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/menu}" th:classappend="${#strings.equals(activeNav, 'menu')} ? 'active'">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gallery}" th:classappend="${#strings.equals(activeNav, 'gallery')} ? 'active'">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/contact}" th:classappend="${#strings.equals(activeNav, 'contact')} ? 'active'">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-primary-vg text-white ms-lg-2 px-3 py-2" th:href="@{/reservations}"
+                           th:classappend="${#strings.equals(activeNav, 'reservations')} ? 'active'"
+                           style="border-radius:4px; font-size:.9rem;">
+                            <i class="fas fa-calendar-check me-1"></i> Reservations
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<!-- ==================== FOOTER FRAGMENT ==================== -->
+<footer th:fragment="footer" class="footer-vg">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Column 1: About -->
+            <div class="col-lg-4 col-md-6">
+                <div class="d-flex align-items-center mb-3">
+                    <img th:src="@{/images/gallery/logo.jpg}" alt="Viva Goa" style="height:45px; border-radius:4px;" />
+                    <h5 class="mb-0 ms-2" style="color:var(--accent);">Viva Goa</h5>
+                </div>
+                <p class="mb-3" style="font-style:italic; font-size:.95rem; color:rgba(255,255,255,.6);">
+                    &ldquo;Food is an experience that should be savored and enjoyed&rdquo;
+                </p>
+                <p style="font-size:.9rem;">
+                    <i class="fas fa-map-marker-alt text-primary-vg me-2"></i>
+                    Sernabatim Road, near Lions Club,<br/>
+                    <span class="ms-4">Colva, Goa, India 403708</span>
+                </p>
+            </div>
+
+            <!-- Column 2: Quick Links -->
+            <div class="col-lg-4 col-md-6">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled footer-links">
+                    <li><a th:href="@{/}">Home</a></li>
+                    <li><a th:href="@{/menu}">Our Menu</a></li>
+                    <li><a th:href="@{/gallery}">Gallery</a></li>
+                    <li><a th:href="@{/contact}">Contact Us</a></li>
+                    <li><a th:href="@{/reservations}">Reserve a Table</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Connect -->
+            <div class="col-lg-4 col-md-6">
+                <h5>Connect With Us</h5>
+                <div class="social-icons mb-3">
+                    <a href="https://www.instagram.com/vivagoa_colva/" target="_blank" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/vivagoacolva/" target="_blank" title="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.zomato.com/goa/viva-goa-colva" target="_blank" title="Zomato">
+                        <i class="fas fa-utensils"></i>
+                    </a>
+                </div>
+                <p style="font-size:.9rem;">
+                    <i class="fas fa-phone-alt text-primary-vg me-2"></i>
+                    <a href="tel:+919822483869" style="color:rgba(255,255,255,.75);">+91 98224 83869</a>
+                </p>
+                <p style="font-size:.9rem;">
+                    <i class="fas fa-phone-alt text-primary-vg me-2"></i>
+                    <a href="tel:+917447446575" style="color:rgba(255,255,255,.75);">+91 74474 46575</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 Viva Goa. All rights reserved.
+    </div>
+</footer>
+
+
+<!-- ==================== SCRIPTS FRAGMENT ==================== -->
+<div th:fragment="scripts">
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Sticky navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const nav = document.querySelector('.navbar-vg');
+            if (nav) {
+                nav.classList.toggle('scrolled', window.scrollY > 50);
+            }
+        });
+
+        // Fade-up on scroll
+        const fadeEls = document.querySelectorAll('.fade-up');
+        const fadeObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    fadeObserver.unobserve(e.target);
+                }
+            });
+        }, {threshold: 0.15});
+        fadeEls.forEach(function (el) { fadeObserver.observe(el); });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+            a.addEventListener('click', function (e) {
+                var target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({behavior: 'smooth', block: 'start'});
+                }
+            });
+        });
+    </script>
+</div>
+
+</html>

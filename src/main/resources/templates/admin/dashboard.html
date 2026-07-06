@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Admin Dashboard')}">
+    <title>Dashboard - Viva Goa Admin</title>
+</head>
+<body>
+
+<div class="admin-wrapper">
+    <!-- ==================== SIDEBAR ==================== -->
+    <nav class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <a th:href="@{/}" class="d-flex align-items-center text-decoration-none">
+                <img th:src="@{/images/gallery/logo.jpg}" alt="Viva Goa" style="height:35px; border-radius:4px;"/>
+                <span class="ms-2" style="color:var(--accent); font-family:'Playfair Display',serif; font-weight:700; font-size:1.1rem;">Viva Goa</span>
+            </a>
+            <small class="text-white-50 d-block mt-1">Admin Panel</small>
+        </div>
+        <ul class="sidebar-nav">
+            <li class="active">
+                <a th:href="@{/admin/dashboard}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li>
+                <a th:href="@{/admin/reservations}"><i class="fas fa-calendar-check"></i> Reservations</a>
+            </li>
+            <li>
+                <a th:href="@{/admin/gallery}"><i class="fas fa-images"></i> Gallery</a>
+            </li>
+            <li>
+                <a th:href="@{/admin/contact}"><i class="fas fa-address-card"></i> Contact Info</a>
+            </li>
+            <li>
+                <a th:href="@{/admin/messages}"><i class="fas fa-envelope"></i> Messages
+                    <span class="badge bg-danger ms-auto" th:if="${unreadCount != null and unreadCount > 0}"
+                          th:text="${unreadCount}">3</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a th:href="@{/admin/logout}" class="text-white-50 text-decoration-none" style="font-size:.85rem;">
+                <i class="fas fa-sign-out-alt me-1"></i> Logout
+            </a>
+        </div>
+    </nav>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="admin-content">
+        <!-- Top Bar -->
+        <div class="admin-topbar">
+            <button class="btn btn-sm btn-outline-secondary d-lg-none me-3" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h4 class="mb-0">Dashboard</h4>
+            <div class="ms-auto">
+                <a th:href="@{/}" target="_blank" class="btn btn-sm btn-outline-secondary">
+                    <i class="fas fa-external-link-alt me-1"></i> View Site
+                </a>
+            </div>
+        </div>
+
+        <div class="admin-body">
+            <!-- Quick Stats -->
+            <div class="row g-4 mb-4">
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card stat-primary">
+                        <div class="stat-icon"><i class="fas fa-calendar-day"></i></div>
+                        <div>
+                            <h3 th:text="${todayReservations != null ? todayReservations : 0}">0</h3>
+                            <p>Today's Reservations</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card stat-accent">
+                        <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div>
+                            <h3 th:text="${upcomingReservations != null ? upcomingReservations : 0}">0</h3>
+                            <p>Upcoming Bookings</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card stat-green">
+                        <div class="stat-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h3 th:text="${unreadMessages != null ? unreadMessages : 0}">0</h3>
+                            <p>Unread Messages</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card stat-dark">
+                        <div class="stat-icon"><i class="fas fa-images"></i></div>
+                        <div>
+                            <h3 th:text="${totalImages != null ? totalImages : 0}">0</h3>
+                            <p>Gallery Images</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Reservations -->
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <h5 class="mb-0">Recent Reservations</h5>
+                            <a th:href="@{/admin/reservations}" class="btn btn-sm btn-primary-vg">View All</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Guest</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Party</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="res : ${recentReservations}">
+                                        <td th:text="${res.guestName}">John Doe</td>
+                                        <td th:text="${#temporals.format(res.reservationDate, 'dd MMM yyyy')}">01 Jan 2026</td>
+                                        <td th:text="${res.reservationTime}">7:00 PM</td>
+                                        <td th:text="${res.partySize}">4</td>
+                                        <td>
+                                            <span class="badge"
+                                                  th:classappend="${res.status == 'CONFIRMED'} ? 'bg-success' :
+                                                      (${res.status == 'CANCELLED'} ? 'bg-danger' :
+                                                      (${res.status == 'NO_SHOW'} ? 'bg-warning text-dark' :
+                                                      (${res.status == 'COMPLETED'} ? 'bg-info' : 'bg-secondary')))"
+                                                  th:text="${res.status}">CONFIRMED</span>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${recentReservations == null or recentReservations.isEmpty()}">
+                                        <td colspan="5" class="text-center text-muted py-4">No recent reservations</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Messages -->
+                <div class="col-lg-4">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <h5 class="mb-0">Recent Messages</h5>
+                            <a th:href="@{/admin/messages}" class="btn btn-sm btn-primary-vg">View All</a>
+                        </div>
+                        <div class="p-3">
+                            <div th:each="msg : ${recentMessages}" class="message-item mb-3">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <strong th:text="${msg.name}" style="font-size:.9rem;">Name</strong>
+                                    <small class="text-muted" th:text="${#temporals.format(msg.createdAt, 'dd MMM')}">01 Jan</small>
+                                </div>
+                                <p class="mb-0 text-muted" style="font-size:.82rem;" th:text="${msg.subject}">Subject</p>
+                            </div>
+                            <div th:if="${recentMessages == null or recentMessages.isEmpty()}" class="text-center text-muted py-4">
+                                <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
+                                No messages
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Sidebar toggle for mobile
+    document.getElementById('sidebarToggle')?.addEventListener('click', function () {
+        document.getElementById('adminSidebar').classList.toggle('show');
+    });
+</script>
+
+<style>
+    /* ===== Admin Layout ===== */
+    .admin-wrapper {
+        display: flex;
+        min-height: 100vh;
+    }
+
+    /* ===== Sidebar ===== */
+    .admin-sidebar {
+        width: 260px;
+        background: var(--dark);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        transition: transform .3s;
+    }
+    .sidebar-header {
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .sidebar-nav {
+        list-style: none;
+        padding: 1rem 0;
+        margin: 0;
+        flex-grow: 1;
+    }
+    .sidebar-nav li a {
+        display: flex;
+        align-items: center;
+        padding: .75rem 1.5rem;
+        color: rgba(255,255,255,.6);
+        text-decoration: none;
+        font-size: .92rem;
+        transition: all .3s;
+        border-left: 3px solid transparent;
+    }
+    .sidebar-nav li a i {
+        width: 22px;
+        margin-right: .75rem;
+        font-size: .95rem;
+    }
+    .sidebar-nav li a:hover,
+    .sidebar-nav li.active a {
+        color: #fff;
+        background: rgba(var(--primary-rgb), .15);
+        border-left-color: var(--primary);
+    }
+    .sidebar-footer {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* ===== Main Content ===== */
+    .admin-content {
+        flex: 1;
+        margin-left: 260px;
+        background: #f4f6f9;
+        min-height: 100vh;
+    }
+    .admin-topbar {
+        display: flex;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        background: #fff;
+        border-bottom: 1px solid #e5e5e5;
+        box-shadow: 0 2px 5px rgba(0,0,0,.05);
+    }
+    .admin-body {
+        padding: 1.5rem;
+    }
+
+    /* ===== Stat Cards ===== */
+    .stat-card {
+        display: flex;
+        align-items: center;
+        padding: 1.5rem;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0,.06);
+        transition: transform .3s;
+    }
+    .stat-card:hover { transform: translateY(-3px); }
+    .stat-card h3 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        margin-bottom: .15rem;
+        font-size: 1.75rem;
+    }
+    .stat-card p {
+        margin: 0;
+        font-size: .82rem;
+        color: #888;
+    }
+    .stat-icon {
+        width: 55px;
+        height: 55px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        font-size: 1.3rem;
+    }
+    .stat-primary .stat-icon { background: rgba(var(--primary-rgb), .12); color: var(--primary); }
+    .stat-primary h3 { color: var(--primary); }
+    .stat-accent .stat-icon { background: rgba(var(--accent-rgb), .12); color: var(--accent); }
+    .stat-accent h3 { color: var(--accent); }
+    .stat-green .stat-icon { background: rgba(var(--secondary-rgb), .12); color: var(--secondary); }
+    .stat-green h3 { color: var(--secondary); }
+    .stat-dark .stat-icon { background: rgba(0,0,0,.08); color: #555; }
+    .stat-dark h3 { color: #333; }
+
+    /* ===== Admin Cards ===== */
+    .admin-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,.06);
+        overflow: hidden;
+    }
+    .admin-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .admin-card-header h5 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .message-item {
+        padding-bottom: .75rem;
+        border-bottom: 1px solid #f5f5f5;
+    }
+    .message-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0 !important;
+    }
+
+    @media (max-width: 992px) {
+        .admin-sidebar {
+            transform: translateX(-100%);
+        }
+        .admin-sidebar.show {
+            transform: translateX(0);
+        }
+        .admin-content {
+            margin-left: 0;
+        }
+    }
+</style>
+
+</body>
+</html>

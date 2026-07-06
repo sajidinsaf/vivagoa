@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Edit Contact Info')}">
+    <title>Contact Info - Viva Goa Admin</title>
+</head>
+<body>
+
+<div class="admin-wrapper">
+    <!-- Sidebar -->
+    <nav class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <a th:href="@{/}" class="d-flex align-items-center text-decoration-none">
+                <img th:src="@{/images/gallery/logo.jpg}" alt="Viva Goa" style="height:35px; border-radius:4px;"/>
+                <span class="ms-2" style="color:var(--accent); font-family:'Playfair Display',serif; font-weight:700; font-size:1.1rem;">Viva Goa</span>
+            </a>
+            <small class="text-white-50 d-block mt-1">Admin Panel</small>
+        </div>
+        <ul class="sidebar-nav">
+            <li><a th:href="@{/admin/dashboard}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a th:href="@{/admin/reservations}"><i class="fas fa-calendar-check"></i> Reservations</a></li>
+            <li><a th:href="@{/admin/gallery}"><i class="fas fa-images"></i> Gallery</a></li>
+            <li class="active"><a th:href="@{/admin/contact}"><i class="fas fa-address-card"></i> Contact Info</a></li>
+            <li><a th:href="@{/admin/messages}"><i class="fas fa-envelope"></i> Messages</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a th:href="@{/admin/logout}" class="text-white-50 text-decoration-none" style="font-size:.85rem;">
+                <i class="fas fa-sign-out-alt me-1"></i> Logout
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="admin-content">
+        <div class="admin-topbar">
+            <button class="btn btn-sm btn-outline-secondary d-lg-none me-3" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h4 class="mb-0">Contact Information</h4>
+            <div class="ms-auto">
+                <a th:href="@{/contact}" target="_blank" class="btn btn-sm btn-outline-secondary">
+                    <i class="fas fa-external-link-alt me-1"></i> View Contact Page
+                </a>
+            </div>
+        </div>
+
+        <div class="admin-body">
+            <!-- Messages -->
+            <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-1"></i> <span th:text="${successMessage}">Saved</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <div class="admin-card">
+                <div class="p-4">
+                    <form th:action="@{/admin/contact}" method="post" th:object="${contactInfo}">
+                        <input type="hidden" th:field="*{id}" th:if="${contactInfo.id != null}"/>
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <h5 class="mb-3" style="color:var(--primary);">
+                                    <i class="fas fa-building me-2"></i>Restaurant Details
+                                </h5>
+                                <div class="mb-3">
+                                    <label class="form-label fw-500">Restaurant Name</label>
+                                    <input type="text" class="form-control" th:field="*{restaurantName}"
+                                           placeholder="Viva Goa"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-500">Tagline</label>
+                                    <input type="text" class="form-control" th:field="*{tagline}"
+                                           placeholder="Food is an experience..."/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-500">Address</label>
+                                    <textarea class="form-control" th:field="*{address}" rows="2"
+                                              placeholder="Full address"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-500">Email</label>
+                                    <input type="email" class="form-control" th:field="*{email}"
+                                           placeholder="contact@vivagoa.com"/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h5 class="mb-3" style="color:var(--primary);">
+                                    <i class="fas fa-phone-alt me-2"></i>Contact &amp; Hours
+                                </h5>
+                                <div class="mb-3">
+                                    <label class="form-label fw-500">Phone 1</label>
+                                    <input type="text" class="form-control" th:field="*{phone1}"
+                                           placeholder="+91 98224 83869"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-500">Phone 2</label>
+                                    <input type="text" class="form-control" th:field="*{phone2}"
+                                           placeholder="+91 74474 46575"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-500">Opening Hours</label>
+                                    <input type="text" class="form-control" th:field="*{openingHours}"
+                                           placeholder="Daily: 11:00 AM - 11:00 PM"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-500">Google Maps Embed URL</label>
+                                    <input type="url" class="form-control" th:field="*{mapEmbedUrl}"
+                                           placeholder="https://www.google.com/maps/embed?pb=..."/>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h5 class="mb-3" style="color:var(--primary);">
+                                    <i class="fas fa-share-alt me-2"></i>Social Media
+                                </h5>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label fw-500">
+                                        <i class="fab fa-instagram me-1" style="color:#E4405F;"></i> Instagram URL
+                                    </label>
+                                    <input type="url" class="form-control" th:field="*{instagramUrl}"
+                                           placeholder="https://instagram.com/vivagoa_colva"/>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label fw-500">
+                                        <i class="fab fa-facebook me-1" style="color:#1877F2;"></i> Facebook URL
+                                    </label>
+                                    <input type="url" class="form-control" th:field="*{facebookUrl}"
+                                           placeholder="https://facebook.com/vivagoacolva"/>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label fw-500">
+                                        <i class="fas fa-utensils me-1" style="color:#E23744;"></i> Zomato URL
+                                    </label>
+                                    <input type="url" class="form-control" th:field="*{zomatoUrl}"
+                                           placeholder="https://zomato.com/goa/viva-goa-colva"/>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <button type="submit" class="btn btn-primary-vg btn-lg">
+                                    <i class="fas fa-save me-2"></i>Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('sidebarToggle')?.addEventListener('click', function () {
+        document.getElementById('adminSidebar').classList.toggle('show');
+    });
+</script>
+
+<style>
+    .admin-wrapper { display:flex; min-height:100vh; }
+    .admin-sidebar { width:260px; background:var(--dark); color:#fff; display:flex; flex-direction:column; position:fixed; top:0; left:0; bottom:0; z-index:1000; transition:transform .3s; }
+    .sidebar-header { padding:1.25rem 1.5rem; border-bottom:1px solid rgba(255,255,255,.08); }
+    .sidebar-nav { list-style:none; padding:1rem 0; margin:0; flex-grow:1; }
+    .sidebar-nav li a { display:flex; align-items:center; padding:.75rem 1.5rem; color:rgba(255,255,255,.6); text-decoration:none; font-size:.92rem; transition:all .3s; border-left:3px solid transparent; }
+    .sidebar-nav li a i { width:22px; margin-right:.75rem; }
+    .sidebar-nav li a:hover, .sidebar-nav li.active a { color:#fff; background:rgba(var(--primary-rgb),.15); border-left-color:var(--primary); }
+    .sidebar-footer { padding:1rem 1.5rem; border-top:1px solid rgba(255,255,255,.08); }
+    .admin-content { flex:1; margin-left:260px; background:#f4f6f9; min-height:100vh; }
+    .admin-topbar { display:flex; align-items:center; padding:1rem 1.5rem; background:#fff; border-bottom:1px solid #e5e5e5; box-shadow:0 2px 5px rgba(0,0,0,.05); }
+    .admin-body { padding:1.5rem; }
+    .admin-card { background:#fff; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,.06); overflow:hidden; }
+    .fw-500 { font-weight:500; }
+
+    @media (max-width:992px) {
+        .admin-sidebar { transform:translateX(-100%); }
+        .admin-sidebar.show { transform:translateX(0); }
+        .admin-content { margin-left:0; }
+    }
+</style>
+
+</body>
+</html>

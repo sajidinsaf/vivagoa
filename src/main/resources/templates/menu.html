@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Our Menu')}">
+    <title>Menu - Viva Goa</title>
+</head>
+<body>
+
+<!-- Header -->
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<!-- ==================== HERO BANNER ==================== -->
+<section class="page-hero" style="background:url('/images/gallery/evening.jpg') center/cover no-repeat;">
+    <div class="text-center">
+        <h1>Our Menu</h1>
+        <div class="accent-line"></div>
+        <p class="breadcrumb-vg">
+            <a th:href="@{/}">Home</a> &nbsp;/&nbsp; Menu
+        </p>
+        <p style="color:rgba(255,255,255,.65); max-width:600px; margin:1rem auto 0;">
+            Goan &bull; Continental &bull; Chinese &bull; Indian
+        </p>
+    </div>
+</section>
+
+<!-- ==================== MENU CONTENT ==================== -->
+<section class="section-padding bg-light-vg">
+    <div class="container">
+
+        <!-- Category Filter Pills -->
+        <div class="text-center mb-5 fade-up">
+            <div class="menu-filter-pills">
+                <button class="menu-pill active" data-filter="all">All</button>
+                <button class="menu-pill" th:each="category : ${menuItems?.keySet()}"
+                        th:data-filter="${#strings.replace(#strings.toLowerCase(category), ' ', '-')}"
+                        th:text="${category}">Category</button>
+            </div>
+        </div>
+
+        <!-- Menu Categories -->
+        <div th:if="${menuItems != null}">
+            <div th:each="entry : ${menuItems}" class="menu-category-block fade-up"
+                 th:data-category="${#strings.replace(#strings.toLowerCase(entry.key), ' ', '-')}">
+                <div class="menu-category-header">
+                    <h3 th:text="${entry.key}">Category Name</h3>
+                    <div class="accent-line-left" style="margin:0 0 0 0;"></div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-lg-6" th:each="item : ${entry.value}">
+                        <div class="menu-item-card">
+                            <div class="d-flex align-items-start">
+                                <!-- Veg/Non-veg indicator -->
+                                <span class="veg-indicator me-2"
+                                      th:classappend="${item.vegetarian} ? 'veg' : 'non-veg'"
+                                      th:title="${item.vegetarian} ? 'Vegetarian' : 'Non-Vegetarian'">
+                                    <span class="dot"></span>
+                                </span>
+                                <!-- Thumbnail if available -->
+                                <img th:if="${item.imageUrl != null and !#strings.isEmpty(item.imageUrl)}"
+                                     th:src="${item.imageUrl}" th:alt="${item.name}"
+                                     class="menu-item-thumb me-3"/>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-baseline">
+                                        <h6 class="menu-item-name mb-0" th:text="${item.name}">Item Name</h6>
+                                        <span class="menu-item-price"
+                                              th:text="${item.price != null and item.price > 0}
+                                                  ? ${#numbers.formatDecimal(item.price, 0, 0)}
+                                                  : 'As Per Size'">
+                                            Price
+                                        </span>
+                                    </div>
+                                    <p class="menu-item-desc mb-0" th:if="${item.description != null}"
+                                       th:text="${item.description}">Description</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fallback when no data -->
+        <div th:if="${menuItems == null}" class="text-center py-5">
+            <i class="fas fa-utensils fa-3x text-muted mb-3" style="display:block;"></i>
+            <h4 class="text-muted">Menu coming soon</h4>
+            <p class="text-muted">Please call us for our current menu.</p>
+        </div>
+
+        <!-- Delivery Menu Note -->
+        <div class="delivery-note fade-up mt-5" th:if="${menuItems != null}">
+            <div class="card-vg p-4">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-motorcycle fa-2x text-primary-vg me-3"></i>
+                    <div>
+                        <h5 class="mb-1">Delivery Menu</h5>
+                        <p class="mb-0 text-muted">
+                            Delivery prices may differ from dine-in prices. Please call us at
+                            <a href="tel:+919822483869" class="text-primary-vg fw-bold">98224 83869</a> or
+                            <a href="tel:+917447446575" class="text-primary-vg fw-bold">74474 46575</a>
+                            for delivery orders and pricing.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<!-- Scripts -->
+<div th:replace="~{fragments/layout :: scripts}"></div>
+
+<style>
+    /* ===== Filter Pills ===== */
+    .menu-filter-pills {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: .5rem;
+    }
+    .menu-pill {
+        background: #fff;
+        border: 2px solid #e0e0e0;
+        padding: .5rem 1.25rem;
+        border-radius: 50px;
+        font-size: .9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all .3s;
+        color: #555;
+    }
+    .menu-pill:hover,
+    .menu-pill.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+    }
+
+    /* ===== Category Block ===== */
+    .menu-category-block {
+        margin-bottom: 3rem;
+    }
+    .menu-category-header {
+        margin-bottom: 1.5rem;
+    }
+    .menu-category-header h3 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--dark);
+    }
+
+    /* ===== Menu Item Card ===== */
+    .menu-item-card {
+        background: #fff;
+        border-radius: 10px;
+        padding: 1rem 1.25rem;
+        transition: all .3s;
+        border: 1px solid rgba(0,0,0,.05);
+    }
+    .menu-item-card:hover {
+        box-shadow: 0 4px 15px rgba(0,0,0,.08);
+        transform: translateY(-2px);
+    }
+    .menu-item-name {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: .95rem;
+        color: var(--dark);
+    }
+    .menu-item-price {
+        font-weight: 700;
+        color: var(--primary);
+        white-space: nowrap;
+        font-size: .95rem;
+        margin-left: .5rem;
+    }
+    .menu-item-desc {
+        font-size: .82rem;
+        color: #888;
+        margin-top: .25rem;
+    }
+    .menu-item-thumb {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    /* ===== Veg / Non-veg Indicator ===== */
+    .veg-indicator {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border: 2px solid;
+        border-radius: 2px;
+        margin-top: 3px;
+        flex-shrink: 0;
+    }
+    .veg-indicator.veg {
+        border-color: var(--secondary);
+    }
+    .veg-indicator.non-veg {
+        border-color: #c0392b;
+    }
+    .veg-indicator .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+    }
+    .veg-indicator.veg .dot {
+        background: var(--secondary);
+    }
+    .veg-indicator.non-veg .dot {
+        background: #c0392b;
+    }
+
+    @media (max-width: 768px) {
+        .menu-pill { font-size: .8rem; padding: .4rem 1rem; }
+    }
+</style>
+
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var pills = document.querySelectorAll('.menu-pill');
+        var blocks = document.querySelectorAll('.menu-category-block');
+
+        pills.forEach(function (pill) {
+            pill.addEventListener('click', function () {
+                pills.forEach(function (p) { p.classList.remove('active'); });
+                this.classList.add('active');
+                var filter = this.getAttribute('data-filter');
+
+                blocks.forEach(function (block) {
+                    if (filter === 'all' || block.getAttribute('data-category') === filter) {
+                        block.style.display = '';
+                    } else {
+                        block.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

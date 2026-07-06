@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Gallery')}">
+    <title>Gallery - Viva Goa</title>
+</head>
+<body>
+
+<!-- Header -->
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<!-- ==================== HERO BANNER ==================== -->
+<section class="page-hero" style="background:url('/images/gallery/evening.jpg') center/cover no-repeat;">
+    <div class="text-center">
+        <h1>Our Gallery</h1>
+        <div class="accent-line"></div>
+        <p class="breadcrumb-vg">
+            <a th:href="@{/}">Home</a> &nbsp;/&nbsp; Gallery
+        </p>
+    </div>
+</section>
+
+<!-- ==================== GALLERY CONTENT ==================== -->
+<section class="section-padding bg-light-vg">
+    <div class="container">
+
+        <!-- Filter Buttons -->
+        <div class="text-center mb-5 fade-up">
+            <div class="menu-filter-pills">
+                <button class="menu-pill active" data-filter="all">All</button>
+                <button class="menu-pill" data-filter="food">Food</button>
+                <button class="menu-pill" data-filter="ambiance">Ambiance</button>
+            </div>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="row g-4 gallery-grid" th:if="${images != null and !images.isEmpty()}">
+            <div th:each="img, iterStat : ${images}"
+                 class="col-lg-4 col-md-6 gallery-item fade-up"
+                 th:data-category="${img.category != null ? #strings.toLowerCase(img.category) : 'food'}">
+                <div class="gallery-card" data-bs-toggle="modal" data-bs-target="#lightboxModal"
+                     th:data-img="${img.imageUrl}"
+                     th:data-title="${img.title}"
+                     th:data-desc="${img.description}">
+                    <div class="gallery-img-wrapper">
+                        <img th:src="${img.imageUrl}" th:alt="${img.title}" class="img-fluid" loading="lazy"/>
+                        <div class="gallery-overlay">
+                            <div class="gallery-overlay-content">
+                                <i class="fas fa-search-plus fa-lg mb-2"></i>
+                                <h5 th:text="${img.title}">Image Title</h5>
+                                <p th:text="${img.description}" th:if="${img.description != null}">Description</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty state -->
+        <div th:if="${images == null or images.isEmpty()}" class="text-center py-5">
+            <i class="fas fa-camera fa-3x text-muted mb-3" style="display:block;"></i>
+            <h4 class="text-muted">Gallery coming soon</h4>
+            <p class="text-muted">We are curating our best moments for you.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== LIGHTBOX MODAL ==================== -->
+<div class="modal fade" id="lightboxModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="background:var(--dark); border:none; border-radius:12px; overflow:hidden;">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title text-white" id="lightboxTitle">Image</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center p-2">
+                <img id="lightboxImage" src="" alt="" class="img-fluid rounded" style="max-height:70vh; object-fit:contain;"/>
+                <p id="lightboxDesc" class="text-white-50 mt-2 mb-0" style="font-size:.9rem;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<!-- Scripts -->
+<div th:replace="~{fragments/layout :: scripts}"></div>
+
+<style>
+    .menu-pill {
+        background: #fff;
+        border: 2px solid #e0e0e0;
+        padding: .5rem 1.25rem;
+        border-radius: 50px;
+        font-size: .9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all .3s;
+        color: #555;
+    }
+    .menu-pill:hover,
+    .menu-pill.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+    }
+
+    .gallery-card {
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+        box-shadow: 0 4px 20px rgba(0,0,0,.08);
+        transition: all .4s;
+    }
+    .gallery-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 35px rgba(0,0,0,.18);
+    }
+    .gallery-img-wrapper {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 4/3;
+    }
+    .gallery-img-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform .6s;
+    }
+    .gallery-card:hover .gallery-img-wrapper img {
+        transform: scale(1.08);
+    }
+    .gallery-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, rgba(26,26,26,.9) 0%, rgba(26,26,26,.3) 50%, transparent 100%);
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity .4s;
+    }
+    .gallery-card:hover .gallery-overlay {
+        opacity: 1;
+    }
+    .gallery-overlay-content {
+        text-align: center;
+        padding: 1.5rem;
+        color: #fff;
+    }
+    .gallery-overlay-content h5 {
+        font-size: 1.1rem;
+        margin-bottom: .25rem;
+    }
+    .gallery-overlay-content p {
+        font-size: .85rem;
+        color: rgba(255,255,255,.7);
+        margin: 0;
+    }
+    .gallery-overlay-content i {
+        color: var(--accent);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Filter
+        var pills = document.querySelectorAll('.menu-pill');
+        var items = document.querySelectorAll('.gallery-item');
+
+        pills.forEach(function (pill) {
+            pill.addEventListener('click', function () {
+                pills.forEach(function (p) { p.classList.remove('active'); });
+                this.classList.add('active');
+                var filter = this.getAttribute('data-filter');
+
+                items.forEach(function (item) {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Lightbox
+        var lightboxModal = document.getElementById('lightboxModal');
+        if (lightboxModal) {
+            lightboxModal.addEventListener('show.bs.modal', function (event) {
+                var trigger = event.relatedTarget;
+                var card = trigger.closest('.gallery-card');
+                document.getElementById('lightboxImage').src = card.getAttribute('data-img');
+                document.getElementById('lightboxTitle').textContent = card.getAttribute('data-title') || '';
+                document.getElementById('lightboxDesc').textContent = card.getAttribute('data-desc') || '';
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

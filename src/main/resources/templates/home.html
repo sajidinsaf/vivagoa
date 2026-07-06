@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Home')}">
+    <title>Viva Goa - Home</title>
+</head>
+<body>
+
+<!-- Header -->
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<!-- ==================== HERO SECTION ==================== -->
+<section class="hero-home" id="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <p class="hero-pre-title fade-up">Welcome to</p>
+        <h1 class="hero-title fade-up">VIVA GOA</h1>
+        <div class="hero-accent-line fade-up"></div>
+        <p class="hero-tagline fade-up">&ldquo;Food is an experience that should be savored and enjoyed&rdquo;</p>
+        <p class="hero-subtitle fade-up">Serving Authentic Goan Cuisine for 24 Years</p>
+        <div class="hero-cta fade-up">
+            <a th:href="@{/menu}" class="btn btn-primary-vg btn-lg me-3">
+                <i class="fas fa-utensils me-2"></i>View Menu
+            </a>
+            <a th:href="@{/reservations}" class="btn btn-outline-vg btn-lg">
+                <i class="fas fa-calendar-check me-2"></i>Book a Table
+            </a>
+        </div>
+    </div>
+    <a href="#about" class="scroll-indicator" aria-label="Scroll down">
+        <i class="fas fa-chevron-down"></i>
+    </a>
+</section>
+
+<!-- ==================== ABOUT SECTION ==================== -->
+<section id="about" class="section-padding bg-light-vg">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 fade-up">
+                <p class="section-subtitle mb-1">Our Story</p>
+                <h2 class="section-title">A Taste of Goa in Every Bite</h2>
+                <div class="accent-line-left"></div>
+                <p class="mb-3">
+                    Welcome to <strong>Viva Goa</strong> &mdash; a beloved dining destination nestled in Colva, South Goa.
+                    For over <strong>24 years</strong>, we have been serving authentic Goan cuisine, fresh seafood,
+                    and a rich selection of Continental, Chinese, and Indian dishes.
+                </p>
+                <p class="mb-3">
+                    Our restaurant captures the essence of Goan hospitality &mdash; warm, vibrant, and full of flavor.
+                    From our signature fish curry rice to sizzling seafood platters, every dish is prepared with fresh,
+                    locally sourced ingredients and time-honored recipes passed down through generations.
+                </p>
+                <p class="mb-4">
+                    Whether you are a traveler seeking an authentic Goan dining experience or a local looking for your
+                    favorite comfort food, Viva Goa promises a meal that stays with you long after the last bite.
+                </p>
+                <div class="d-flex gap-4">
+                    <div class="text-center">
+                        <h3 class="text-primary-vg fw-bold mb-0">24+</h3>
+                        <small class="text-muted">Years Serving</small>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-primary-vg fw-bold mb-0">4</h3>
+                        <small class="text-muted">Cuisines</small>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-primary-vg fw-bold mb-0">100+</h3>
+                        <small class="text-muted">Dishes</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 fade-up">
+                <div class="about-img-wrapper">
+                    <img th:src="@{/images/gallery/dining1.jpg}" alt="Viva Goa Dining" class="img-fluid rounded shadow-lg"/>
+                    <div class="about-img-badge">
+                        <span>Est.</span>
+                        <strong>2001</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== HIGHLIGHTS SECTION ==================== -->
+<section class="section-padding" style="background: var(--dark);">
+    <div class="container">
+        <div class="text-center mb-5">
+            <p class="section-subtitle" style="color:var(--accent);">Why Choose Us</p>
+            <h2 class="section-title" style="color:#fff;">The Viva Goa Experience</h2>
+            <div style="width:80px;height:3px;background:var(--primary);margin:.75rem auto 0;"></div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4 fade-up">
+                <div class="highlight-card text-center p-4">
+                    <div class="highlight-icon">
+                        <i class="fas fa-fish"></i>
+                    </div>
+                    <h4>Fresh Seafood</h4>
+                    <p>Market-to-table freshness every day. Our seafood is sourced directly from local fishermen,
+                       ensuring the catch of the day is truly that &mdash; today's catch.</p>
+                </div>
+            </div>
+            <div class="col-md-4 fade-up">
+                <div class="highlight-card text-center p-4">
+                    <div class="highlight-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h4>Live Music &amp; Karaoke</h4>
+                    <p>Enjoy your meal with soulful live performances and exciting karaoke nights.
+                       Let the rhythm of Goa set the mood for an unforgettable evening.</p>
+                </div>
+            </div>
+            <div class="col-md-4 fade-up">
+                <div class="highlight-card text-center p-4">
+                    <div class="highlight-icon">
+                        <i class="fas fa-globe-asia"></i>
+                    </div>
+                    <h4>Multi-Cuisine</h4>
+                    <p>From authentic Goan delicacies to Continental, Chinese, and Indian favorites &mdash;
+                       our diverse menu has something to delight every palate.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FEATURED DISHES SECTION ==================== -->
+<section class="section-padding bg-light-vg">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <p class="section-subtitle">From Our Kitchen</p>
+            <h2 class="section-title">Featured Dishes</h2>
+            <div style="width:80px;height:3px;background:var(--primary);margin:.75rem auto 0;"></div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4 col-sm-6 fade-up" th:each="img : ${galleryImages}" th:if="${img.category.name() == 'FOOD' and img.active}">
+                <div class="dish-card">
+                    <div class="dish-img-wrapper">
+                        <img th:src="@{'/images/gallery/' + ${img.fileName}}" th:alt="${img.title}" class="img-fluid"/>
+                        <div class="dish-overlay">
+                            <h5 th:text="${img.title}">Dish Name</h5>
+                            <p th:text="${img.description}">Description</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-5 fade-up">
+            <a th:href="@{/menu}" class="btn btn-primary-vg btn-lg">
+                <i class="fas fa-book-open me-2"></i>View Full Menu
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== REVIEWS CAROUSEL SECTION ==================== -->
+<section class="section-padding" style="background: var(--dark);">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <p class="section-subtitle" style="color:var(--accent);">What Our Guests Say</p>
+            <h2 class="section-title" style="color:#fff;">Reviews</h2>
+            <div style="width:80px;height:3px;background:var(--primary);margin:.75rem auto 0;"></div>
+        </div>
+        <div id="reviewsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+            <div class="carousel-inner">
+                <!-- Review 1 -->
+                <div class="carousel-item active">
+                    <div class="review-card mx-auto">
+                        <div class="review-stars mb-3">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">&ldquo;Enjoyed food, hospitality, atmosphere. Service and Covid safety measures are excellent.&rdquo;</p>
+                        <div class="review-author">
+                            <strong>Ekaterina Balandina</strong>
+                            <span>via Facebook</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 2 -->
+                <div class="carousel-item">
+                    <div class="review-card mx-auto">
+                        <div class="review-stars mb-3">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">&ldquo;Fantastic place to dine out anytime with family and friends. Child-friendly, indoor dining, classic cocktails, great food, fine dining.&rdquo;</p>
+                        <div class="review-author">
+                            <strong>Goa Hog Chapter</strong>
+                            <span>via Facebook</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 3 -->
+                <div class="carousel-item">
+                    <div class="review-card mx-auto">
+                        <div class="review-stars mb-3">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">&ldquo;Always loved visiting this place whenever I come to Goa. It's my favorite restaurant with a friendly atmosphere and the food is delicious.&rdquo;</p>
+                        <div class="review-author">
+                            <strong>Jennifer Pereira Nunes</strong>
+                            <span>via Facebook</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 4 -->
+                <div class="carousel-item">
+                    <div class="review-card mx-auto">
+                        <div class="review-stars mb-3">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">&ldquo;Best home made Mutton Keema and bread for breakfast. Great hospitality.&rdquo;</p>
+                        <div class="review-author">
+                            <strong>Edward DCunha</strong>
+                            <span>via Facebook</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 5 -->
+                <div class="carousel-item">
+                    <div class="review-card mx-auto">
+                        <div class="review-stars mb-3">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">&ldquo;The garlic butter prawn was amazing... I could have two plates all by myself!&rdquo;</p>
+                        <div class="review-author">
+                            <strong>Debjani Bagchi</strong>
+                            <span>via Facebook</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 6 -->
+                <div class="carousel-item">
+                    <div class="review-card mx-auto">
+                        <div class="review-stars mb-3">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">&ldquo;Just great food, love the seafood options and their drinks are very well prepared. Classic cocktails, large menu, stylish interior.&rdquo;</p>
+                        <div class="review-author">
+                            <strong>Pratik Tar</strong>
+                            <span>via Facebook</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 7 -->
+                <div class="carousel-item">
+                    <div class="review-card mx-auto">
+                        <div class="review-stars mb-3">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">&ldquo;It's one of the best places in South Goa to dine. Francis &amp; Anne, you've really kept the taste of food on a very high note. Also very hygienic place to sit out. God bless you!&rdquo;</p>
+                        <div class="review-author">
+                            <strong>Majestic Band Margao</strong>
+                            <span>via Facebook</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 8 -->
+                <div class="carousel-item">
+                    <div class="review-card mx-auto">
+                        <div class="review-stars mb-3">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">&ldquo;Great ambience... Good food... lovely People... highly recommended!!!&rdquo;</p>
+                        <div class="review-author">
+                            <strong>Roman Tellis</strong>
+                            <span>via Facebook</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 9 -->
+                <div class="carousel-item">
+                    <div class="review-card mx-auto">
+                        <div class="review-stars mb-3">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">&ldquo;It's a beautiful place to relax and enjoy the delicious food &amp; hospitality with family and friends. Good luck Viva Goa.&rdquo;</p>
+                        <div class="review-author">
+                            <strong>Kaushal Kishore</strong>
+                            <span>via Facebook</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 10 -->
+                <div class="carousel-item">
+                    <div class="review-card mx-auto">
+                        <div class="review-stars mb-3">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">&ldquo;Very nice food. Must try Prawn Masala fry over here.&rdquo;</p>
+                        <div class="review-author">
+                            <strong>Parth Deshmukh</strong>
+                            <span>via Facebook</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="3"></button>
+                <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="4"></button>
+                <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="5"></button>
+                <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="6"></button>
+                <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="7"></button>
+                <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="8"></button>
+                <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="9"></button>
+            </div>
+        </div>
+        <div class="text-center mt-4 fade-up">
+            <a href="https://www.facebook.com/vivagoacolva/" target="_blank" class="btn btn-outline-light">
+                <i class="fab fa-facebook me-2"></i>See More Reviews on Facebook
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CTA / PARALLAX SECTION ==================== -->
+<section class="cta-section">
+    <div class="cta-overlay"></div>
+    <div class="container position-relative" style="z-index:2;">
+        <div class="text-center fade-up">
+            <h2 class="cta-title">Reserve Your Table Today</h2>
+            <p class="cta-text">
+                Experience the warmth of Goan hospitality. Join us for a memorable dining experience.
+            </p>
+            <a th:href="@{/reservations}" class="btn btn-primary-vg btn-lg mt-3">
+                <i class="fas fa-calendar-check me-2"></i>Make a Reservation
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<!-- Scripts -->
+<div th:replace="~{fragments/layout :: scripts}"></div>
+
+<style>
+    /* ===== Hero ===== */
+    .hero-home {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: url('/images/gallery/evening.jpg') center/cover no-repeat fixed;
+    }
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg,
+            rgba(26,26,26,.65) 0%,
+            rgba(26,26,26,.55) 50%,
+            rgba(26,26,26,.8) 100%);
+        z-index: 1;
+    }
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+        padding: 0 1rem;
+    }
+    .hero-pre-title {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.1rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: .5rem;
+    }
+    .hero-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 5rem;
+        font-weight: 800;
+        color: #fff;
+        letter-spacing: 6px;
+        margin-bottom: .5rem;
+        text-shadow: 3px 3px 15px rgba(0,0,0,.5);
+    }
+    .hero-accent-line {
+        width: 100px;
+        height: 3px;
+        background: var(--primary);
+        margin: 1rem auto;
+    }
+    .hero-tagline {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.35rem;
+        font-style: italic;
+        color: rgba(255,255,255,.85);
+        margin-bottom: .5rem;
+    }
+    .hero-subtitle {
+        font-size: 1rem;
+        color: rgba(255,255,255,.65);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+    }
+    .scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        color: var(--accent);
+        font-size: 1.5rem;
+        animation: bounce 2s infinite;
+        text-decoration: none;
+    }
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+        40% { transform: translateX(-50%) translateY(-12px); }
+        60% { transform: translateX(-50%) translateY(-6px); }
+    }
+
+    /* ===== About Image ===== */
+    .about-img-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+    .about-img-wrapper img {
+        border-radius: 12px;
+    }
+    .about-img-badge {
+        position: absolute;
+        bottom: -15px;
+        right: -15px;
+        background: var(--primary);
+        color: #fff;
+        padding: 1rem 1.25rem;
+        border-radius: 12px;
+        text-align: center;
+        line-height: 1.2;
+        box-shadow: 0 6px 20px rgba(var(--primary-rgb), .4);
+    }
+    .about-img-badge span {
+        display: block;
+        font-size: .75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .about-img-badge strong {
+        font-size: 1.5rem;
+    }
+
+    /* ===== Highlights ===== */
+    .highlight-card {
+        background: rgba(255,255,255,.05);
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 12px;
+        transition: all .4s;
+    }
+    .highlight-card:hover {
+        background: rgba(255,255,255,.1);
+        transform: translateY(-6px);
+        border-color: rgba(var(--primary-rgb), .3);
+    }
+    .highlight-card h4 {
+        color: #fff;
+        margin: 1rem 0 .75rem;
+    }
+    .highlight-card p {
+        color: rgba(255,255,255,.6);
+        font-size: .95rem;
+    }
+    .highlight-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        font-size: 1.75rem;
+        color: #fff;
+    }
+
+    /* ===== Dish Cards ===== */
+    .dish-card {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,.1);
+    }
+    .dish-img-wrapper {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 4/3;
+    }
+    .dish-img-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform .5s;
+    }
+    .dish-card:hover .dish-img-wrapper img {
+        transform: scale(1.1);
+    }
+    .dish-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, rgba(26,26,26,.85) 0%, transparent 60%);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 1.5rem;
+        opacity: 0;
+        transition: opacity .4s;
+    }
+    .dish-card:hover .dish-overlay {
+        opacity: 1;
+    }
+    .dish-overlay h5 {
+        color: #fff;
+        font-size: 1.2rem;
+        margin-bottom: .25rem;
+    }
+    .dish-overlay p {
+        color: rgba(255,255,255,.75);
+        font-size: .85rem;
+        margin: 0;
+    }
+
+    /* ===== CTA ===== */
+    .cta-section {
+        position: relative;
+        padding: 6rem 0;
+        background: url('/images/gallery/evening.jpg') center/cover no-repeat fixed;
+    }
+    .cta-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(26,26,26,.8);
+    }
+    .cta-title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #fff;
+    }
+    .cta-text {
+        color: rgba(255,255,255,.75);
+        font-size: 1.15rem;
+        max-width: 600px;
+        margin: 1rem auto 0;
+    }
+
+    /* ===== Reviews Carousel ===== */
+    .review-card {
+        max-width: 700px;
+        text-align: center;
+        padding: 2.5rem 2rem;
+    }
+    .review-stars {
+        color: var(--accent);
+        font-size: 1.25rem;
+        letter-spacing: 4px;
+    }
+    .review-text {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.35rem;
+        font-style: italic;
+        color: rgba(255,255,255,.9);
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+    }
+    .review-author strong {
+        display: block;
+        color: #fff;
+        font-size: 1rem;
+        margin-bottom: .25rem;
+    }
+    .review-author span {
+        color: rgba(255,255,255,.5);
+        font-size: .85rem;
+    }
+    #reviewsCarousel .carousel-indicators {
+        position: relative;
+        margin-top: 1.5rem;
+    }
+    #reviewsCarousel .carousel-indicators button {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.3);
+        border: none;
+        margin: 0 4px;
+    }
+    #reviewsCarousel .carousel-indicators button.active {
+        background: var(--primary);
+    }
+    #reviewsCarousel .carousel-control-prev,
+    #reviewsCarousel .carousel-control-next {
+        width: 5%;
+        opacity: .5;
+    }
+    #reviewsCarousel .carousel-control-prev:hover,
+    #reviewsCarousel .carousel-control-next:hover {
+        opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+        .hero-title { font-size: 3rem; letter-spacing: 3px; }
+        .hero-tagline { font-size: 1.1rem; }
+        .cta-title { font-size: 2rem; }
+        .review-text { font-size: 1.1rem; }
+    }
+</style>
+
+</body>
+</html>

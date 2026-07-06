@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Contact Us')}">
+    <title>Contact - Viva Goa</title>
+</head>
+<body>
+
+<!-- Header -->
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<!-- ==================== HERO BANNER ==================== -->
+<section class="page-hero" style="background:url('/images/gallery/evening.jpg') center/cover no-repeat;">
+    <div class="text-center">
+        <h1>Contact Us</h1>
+        <div class="accent-line"></div>
+        <p class="breadcrumb-vg">
+            <a th:href="@{/}">Home</a> &nbsp;/&nbsp; Contact
+        </p>
+    </div>
+</section>
+
+<!-- ==================== CONTACT CONTENT ==================== -->
+<section class="section-padding bg-light-vg">
+    <div class="container">
+
+        <!-- Success / Error Messages -->
+        <div th:if="${message}" class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            <span th:text="${message}">Message sent successfully!</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span th:text="${error}">Something went wrong.</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <div class="row g-5">
+            <!-- Contact Form -->
+            <div class="col-lg-7 fade-up">
+                <div class="card-vg p-4 p-md-5">
+                    <h3 class="mb-1">Send Us a Message</h3>
+                    <div class="accent-line-left"></div>
+                    <form th:action="@{/contact}" method="post">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-500">Full Name <span class="text-danger">*</span></label>
+                                <input type="text" name="name" class="form-control" placeholder="Your name" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-500">Email <span class="text-danger">*</span></label>
+                                <input type="email" name="email" class="form-control" placeholder="your@email.com" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-500">Phone</label>
+                                <input type="tel" name="phone" class="form-control" placeholder="+91 XXXXX XXXXX" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-500">Subject <span class="text-danger">*</span></label>
+                                <input type="text" name="subject" class="form-control" placeholder="Subject" required />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-500">Message <span class="text-danger">*</span></label>
+                                <textarea name="message" class="form-control" rows="5" placeholder="Write your message here..." required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary-vg btn-lg w-100">
+                                    <i class="fas fa-paper-plane me-2"></i>Send Message
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-lg-5 fade-up">
+                <div class="card-vg p-4 p-md-5 mb-4" style="background:var(--dark); color:#fff;">
+                    <h3 class="mb-3" style="color:var(--accent);">Get in Touch</h3>
+                    <div class="accent-line-left" style="background:var(--accent);"></div>
+
+                    <div class="d-flex mb-3">
+                        <div class="contact-icon-box">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-white mb-1">Address</h6>
+                            <p class="mb-0" style="color:rgba(255,255,255,.65); font-size:.9rem;"
+                               th:text="${contactInfo != null ? contactInfo.address : 'Sernabatim Road, near Lions Club, Colva, Goa, India 403708'}">
+                                Sernabatim Road, near Lions Club, Colva, Goa, India 403708
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex mb-3">
+                        <div class="contact-icon-box">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-white mb-1">Phone</h6>
+                            <p class="mb-0" style="color:rgba(255,255,255,.65); font-size:.9rem;">
+                                <a href="tel:+919822483869" style="color:rgba(255,255,255,.65);">+91 98224 83869</a><br/>
+                                <a href="tel:+917447446575" style="color:rgba(255,255,255,.65);">+91 74474 46575</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex mb-3">
+                        <div class="contact-icon-box">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-white mb-1">Opening Hours</h6>
+                            <p class="mb-0" style="color:rgba(255,255,255,.65); font-size:.9rem;"
+                               th:text="${contactInfo != null and contactInfo.openingHours != null ? contactInfo.openingHours : 'Open Daily: 11:00 AM - 11:00 PM'}">
+                                Open Daily: 11:00 AM - 11:00 PM
+                            </p>
+                        </div>
+                    </div>
+
+                    <hr style="border-color:rgba(255,255,255,.15);"/>
+
+                    <h6 class="text-accent mb-3">Follow Us</h6>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/vivagoa_colva/" target="_blank" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.facebook.com/vivagoacolva/" target="_blank" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.zomato.com/goa/viva-goa-colva" target="_blank" class="social-link">
+                            <i class="fas fa-utensils"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Google Maps Placeholder -->
+                <div class="card-vg overflow-hidden">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3847.8!2d73.9115!3d15.2805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTXCsDE2JzQ5LjgiTiA3M8KwNTQnNDEuNCJF!5e0!3m2!1sen!2sin!4v1700000000000"
+                        width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade" title="Viva Goa Location">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<!-- Scripts -->
+<div th:replace="~{fragments/layout :: scripts}"></div>
+
+<style>
+    .contact-icon-box {
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
+        background: rgba(var(--primary-rgb), .15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        flex-shrink: 0;
+        color: var(--primary);
+        font-size: 1.1rem;
+    }
+    .social-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,.2);
+        color: #fff !important;
+        margin-right: .5rem;
+        transition: all .3s;
+        text-decoration: none;
+    }
+    .social-link:hover {
+        background: var(--primary);
+        border-color: var(--primary);
+        transform: translateY(-3px);
+    }
+    .fw-500 { font-weight: 500; }
+</style>
+
+</body>
+</html>

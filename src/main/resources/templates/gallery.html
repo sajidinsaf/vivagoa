@@ -33,16 +33,16 @@
         </div>
 
         <!-- Gallery Grid -->
-        <div class="row g-4 gallery-grid" th:if="${images != null and !images.isEmpty()}">
-            <div th:each="img, iterStat : ${images}"
+        <div class="row g-4 gallery-grid" th:if="${allImages != null and !allImages.isEmpty()}">
+            <div th:each="img, iterStat : ${allImages}"
                  class="col-lg-4 col-md-6 gallery-item fade-up"
-                 th:data-category="${img.category != null ? #strings.toLowerCase(img.category) : 'food'}">
+                 th:data-category="${img.category != null ? #strings.toLowerCase(img.category.name()) : 'food'}">
                 <div class="gallery-card" data-bs-toggle="modal" data-bs-target="#lightboxModal"
-                     th:data-img="${img.imageUrl}"
+                     th:attr="data-img=@{'/images/gallery/' + ${img.fileName}}"
                      th:data-title="${img.title}"
                      th:data-desc="${img.description}">
                     <div class="gallery-img-wrapper">
-                        <img th:src="${img.imageUrl}" th:alt="${img.title}" class="img-fluid" loading="lazy"/>
+                        <img th:src="@{'/images/gallery/' + ${img.fileName}}" th:alt="${img.title}" class="img-fluid" loading="lazy"/>
                         <div class="gallery-overlay">
                             <div class="gallery-overlay-content">
                                 <i class="fas fa-search-plus fa-lg mb-2"></i>
@@ -56,7 +56,7 @@
         </div>
 
         <!-- Empty state -->
-        <div th:if="${images == null or images.isEmpty()}" class="text-center py-5">
+        <div th:if="${allImages == null or images.isEmpty()}" class="text-center py-5">
             <i class="fas fa-camera fa-3x text-muted mb-3" style="display:block;"></i>
             <h4 class="text-muted">Gallery coming soon</h4>
             <p class="text-muted">We are curating our best moments for you.</p>

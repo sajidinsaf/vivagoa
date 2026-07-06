@@ -55,15 +55,15 @@
                                     <span class="dot"></span>
                                 </span>
                                 <!-- Thumbnail if available -->
-                                <img th:if="${item.imageUrl != null and !#strings.isEmpty(item.imageUrl)}"
-                                     th:src="${item.imageUrl}" th:alt="${item.name}"
+                                <img th:if="${item.galleryImage != null}"
+                                     th:src="@{'/images/gallery/' + ${item.galleryImage.fileName}}" th:alt="${item.name}"
                                      class="menu-item-thumb me-3"/>
                                 <div class="flex-grow-1">
                                     <div class="d-flex justify-content-between align-items-baseline">
                                         <h6 class="menu-item-name mb-0" th:text="${item.name}">Item Name</h6>
                                         <span class="menu-item-price"
-                                              th:text="${item.price != null and item.price > 0}
-                                                  ? ${#numbers.formatDecimal(item.price, 0, 0)}
+                                              th:text="${item.price != null and item.price.compareTo(T(java.math.BigDecimal).ZERO) > 0}
+                                                  ? '&#x20B9; ' + ${#numbers.formatDecimal(item.price, 0, 0)}
                                                   : 'As Per Size'">
                                             Price
                                         </span>

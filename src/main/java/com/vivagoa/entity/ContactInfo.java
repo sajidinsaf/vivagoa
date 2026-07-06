@@ -10,6 +10,10 @@ public class ContactInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String restaurantName;
+
+    private String tagline;
+
     private String phone1;
 
     private String phone2;
@@ -39,6 +43,22 @@ public class ContactInfo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
+    }
+
+    public String getTagline() {
+        return tagline;
+    }
+
+    public void setTagline(String tagline) {
+        this.tagline = tagline;
     }
 
     public String getPhone1() {

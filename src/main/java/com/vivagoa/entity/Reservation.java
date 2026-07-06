@@ -26,7 +26,7 @@ public class Reservation {
     private String phone;
 
     @Column(nullable = false)
-    private int partySize;
+    private Integer partySize;
 
     @Column(nullable = false)
     private LocalDate reservationDate;
@@ -86,11 +86,11 @@ public class Reservation {
         this.phone = phone;
     }
 
-    public int getPartySize() {
+    public Integer getPartySize() {
         return partySize;
     }
 
-    public void setPartySize(int partySize) {
+    public void setPartySize(Integer partySize) {
         this.partySize = partySize;
     }
 

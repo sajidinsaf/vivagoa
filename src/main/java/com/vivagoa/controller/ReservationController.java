@@ -25,7 +25,7 @@ public class ReservationController {
     public String reservationForm(Model model) {
         model.addAttribute("reservation", new Reservation());
         contactService.getContactInfo().ifPresent(info -> model.addAttribute("contactInfo", info));
-        return "reservations";
+        return "reservation";
     }
 
     @PostMapping("/reservations")

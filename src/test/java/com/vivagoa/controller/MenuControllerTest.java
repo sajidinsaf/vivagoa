@@ -55,7 +55,7 @@ class MenuControllerTest {
         mockMvc.perform(get("/menu"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("menu"))
-                .andExpect(model().attributeExists("menuByCategory"));
+                .andExpect(model().attributeExists("menuItems"));
     }
 
     @Test
@@ -82,6 +82,6 @@ class MenuControllerTest {
         mockMvc.perform(get("/menu"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("menu"))
-                .andExpect(model().attributeExists("menuByCategory"));
+                .andExpect(model().attributeExists("menuItems"));
     }
 }

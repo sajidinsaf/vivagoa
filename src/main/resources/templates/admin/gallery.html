@@ -19,6 +19,7 @@
             <li><a th:href="@{/admin/dashboard}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
             <li><a th:href="@{/admin/reservations}"><i class="fas fa-calendar-check"></i> Reservations</a></li>
             <li class="active"><a th:href="@{/admin/gallery}"><i class="fas fa-images"></i> Gallery</a></li>
+            <li><a th:href="@{/admin/menu}"><i class="fas fa-utensils"></i> Menu</a></li>
             <li><a th:href="@{/admin/contact}"><i class="fas fa-address-card"></i> Contact Info</a></li>
             <li><a th:href="@{/admin/messages}"><i class="fas fa-envelope"></i> Messages</a></li>
         </ul>
@@ -59,19 +60,16 @@
                 <div class="col-xl-3 col-lg-4 col-md-6" th:each="img : ${images}">
                     <div class="admin-gallery-card">
                         <div class="admin-gallery-img">
-                            <img th:src="${img.imageUrl}" th:alt="${img.title}" class="img-fluid"/>
+                            <img th:src="@{'/images/gallery/' + ${img.fileName}}" th:alt="${img.title}" class="img-fluid"/>
                             <div class="admin-gallery-overlay">
                                 <button class="btn btn-sm btn-warning me-1" data-bs-toggle="modal"
                                         th:data-bs-target="'#editModal' + ${img.id}"
                                         title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <a th:href="@{/admin/gallery/{id}/delete(id=${img.id})}"
-                                   class="btn btn-sm btn-danger"
-                                   onclick="return confirm('Delete this image?')"
-                                   title="Delete">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
+                                <form th:action="@{/admin/gallery/{id}/delete(id=${img.id})}" method="post" style="display:inline;" onsubmit="return confirm('Delete this image?')">
+                                    <button type="submit" class="btn btn-sm btn-danger" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                                </form>
                             </div>
                         </div>
                         <div class="p-2">
@@ -99,11 +97,11 @@
                 <h5 class="modal-title"><i class="fas fa-cloud-upload-alt me-2"></i>Upload Image</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form th:action="@{/admin/gallery/upload}" method="post" enctype="multipart/form-data">
+            <form th:action="@{/admin/gallery}" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label fw-500">Image File <span class="text-danger">*</span></label>
-                        <input type="file" class="form-control" name="file" accept="image/*" required />
+                        <input type="file" class="form-control" name="imageFile" accept="image/*" required />
                         <small class="text-muted">Max size: 10MB. Supported: JPG, PNG, WebP</small>
                     </div>
                     <div class="mb-3">
@@ -146,7 +144,7 @@
                 <form th:action="@{/admin/gallery/{id}/update(id=${img.id})}" method="post">
                     <div class="modal-body">
                         <div class="text-center mb-3">
-                            <img th:src="${img.imageUrl}" th:alt="${img.title}" class="img-fluid rounded"
+                            <img th:src="@{'/images/gallery/' + ${img.fileName}}" th:alt="${img.title}" class="img-fluid rounded"
                                  style="max-height:200px;"/>
                         </div>
                         <div class="mb-3">
@@ -162,6 +160,17 @@
                             <select class="form-select" name="category">
                                 <option value="Food" th:selected="${img.category == 'Food'}">Food</option>
                                 <option value="Ambiance" th:selected="${img.category == 'Ambiance'}">Ambiance</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Display Order</label>
+                            <input type="number" class="form-control" name="displayOrder" th:value="${img.displayOrder}"/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Active</label>
+                            <select class="form-select" name="active">
+                                <option value="true" th:selected="${img.active}">Active</option>
+                                <option value="false" th:selected="${!img.active}">Inactive</option>
                             </select>
                         </div>
                     </div>

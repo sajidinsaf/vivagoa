@@ -40,6 +40,24 @@ public class AdminController {
         model.addAttribute("totalToday", todayReservations.size());
         long unreadMessages = contactService.getUnreadMessages().size();
         model.addAttribute("unreadMessages", unreadMessages);
+
+        // Upcoming reservations
+        List<Reservation> upcoming = reservationService.findByDateRange(LocalDate.now().plusDays(1), LocalDate.now().plusDays(30));
+        model.addAttribute("upcomingReservations", upcoming.size());
+
+        // Total gallery images
+        model.addAttribute("totalImages", galleryService.findAll().size());
+
+        // Unread count for sidebar badge
+        model.addAttribute("unreadCount", contactService.getUnreadMessages().size());
+
+        // Recent reservations (reuse today's list)
+        model.addAttribute("recentReservations", todayReservations);
+
+        // Recent messages (limit to 5)
+        List<ContactMessage> allMessages = contactService.getAllMessages();
+        model.addAttribute("recentMessages", allMessages.size() > 5 ? allMessages.subList(0, 5) : allMessages);
+
         return "admin/dashboard";
     }
 
@@ -171,5 +189,77 @@ public class AdminController {
     public String markMessageRead(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         contactService.markAsRead(id);
         return "redirect:/admin/messages";
+    }
+
+    // Menu Management
+    @GetMapping("/menu")
+    public String manageMenu(Model model) {
+        model.addAttribute("groupedMenu", menuService.getAllMenuGroupedByCategory());
+        model.addAttribute("menuItems", menuService.findAll());
+        model.addAttribute("galleryImages", galleryService.findAll());
+        return "admin/menu";
+    }
+
+    @PostMapping("/menu")
+    public String addMenuItem(@RequestParam String name,
+                             @RequestParam(required = false) String description,
+                             @RequestParam BigDecimal price,
+                             @RequestParam String category,
+                             @RequestParam(required = false, defaultValue = "false") boolean vegetarian,
+                             @RequestParam(required = false, defaultValue = "true") boolean available,
+                             @RequestParam(required = false, defaultValue = "0") int displayOrder,
+                             @RequestParam(required = false) Long galleryImageId,
+                             RedirectAttributes redirectAttributes) {
+        MenuItem item = new MenuItem();
+        item.setName(name);
+        item.setDescription(description);
+        item.setPrice(price);
+        item.setCategory(category);
+        item.setVegetarian(vegetarian);
+        item.setAvailable(available);
+        item.setDisplayOrder(displayOrder);
+        if (galleryImageId != null) {
+            galleryService.findById(galleryImageId).ifPresent(item::setGalleryImage);
+        }
+        menuService.save(item);
+        redirectAttributes.addFlashAttribute("successMessage", "Menu item added.");
+        return "redirect:/admin/menu";
+    }
+
+    @PostMapping("/menu/{id}/update")
+    public String updateMenuItem(@PathVariable Long id,
+                                @RequestParam String name,
+                                @RequestParam(required = false) String description,
+                                @RequestParam BigDecimal price,
+                                @RequestParam String category,
+                                @RequestParam(required = false, defaultValue = "false") boolean vegetarian,
+                                @RequestParam(required = false, defaultValue = "true") boolean available,
+                                @RequestParam(required = false, defaultValue = "0") int displayOrder,
+                                @RequestParam(required = false) Long galleryImageId,
+                                RedirectAttributes redirectAttributes) {
+        menuService.findById(id).ifPresent(item -> {
+            item.setName(name);
+            item.setDescription(description);
+            item.setPrice(price);
+            item.setCategory(category);
+            item.setVegetarian(vegetarian);
+            item.setAvailable(available);
+            item.setDisplayOrder(displayOrder);
+            if (galleryImageId != null) {
+                galleryService.findById(galleryImageId).ifPresent(item::setGalleryImage);
+            } else {
+                item.setGalleryImage(null);
+            }
+            menuService.save(item);
+        });
+        redirectAttributes.addFlashAttribute("successMessage", "Menu item updated.");
+        return "redirect:/admin/menu";
+    }
+
+    @PostMapping("/menu/{id}/delete")
+    public String deleteMenuItem(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        menuService.delete(id);
+        redirectAttributes.addFlashAttribute("successMessage", "Menu item deleted.");
+        return "redirect:/admin/menu";
     }
 }

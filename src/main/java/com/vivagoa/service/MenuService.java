@@ -51,6 +51,12 @@ public class MenuService {
                 .collect(Collectors.groupingBy(MenuItem::getCategory, LinkedHashMap::new, Collectors.toList()));
     }
 
+    public Map<String, List<MenuItem>> getAllMenuGroupedByCategory() {
+        List<MenuItem> allItems = menuItemRepository.findAll();
+        return allItems.stream()
+                .collect(Collectors.groupingBy(MenuItem::getCategory, LinkedHashMap::new, Collectors.toList()));
+    }
+
     public void delete(Long id) {
         menuItemRepository.deleteById(id);
     }

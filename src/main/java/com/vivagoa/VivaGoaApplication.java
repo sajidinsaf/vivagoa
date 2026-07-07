@@ -7,7 +7,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
-@PropertySource(value = "file:/ifaru02/vivagoa/vivagoa.properties", ignoreResourceNotFound = true)
+@PropertySource(value = "file:/home/ifaru02/vivagoa/vivagoa.properties", ignoreResourceNotFound = true)
 public class VivaGoaApplication extends SpringBootServletInitializer {
 
     @Override

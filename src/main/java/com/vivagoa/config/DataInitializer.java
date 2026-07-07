@@ -234,6 +234,57 @@ public class DataInitializer implements CommandLineRunner {
                 new Object[]{"Mix Hakka / Noodles", 200, false}
             );
 
+            // DELIVERY MENU - Non Vegetarian
+            order = seedMenuCategory("Delivery - Non Vegetarian", order,
+                new Object[]{"Butter Chicken", 250, false},
+                new Object[]{"Chicken Tikka Masala", 250, false},
+                new Object[]{"Chicken Kolhapuri", 250, false},
+                new Object[]{"Kadai Chicken", 250, false},
+                new Object[]{"Chicken 65", 250, false},
+                new Object[]{"Chilly Chicken", 250, false},
+                new Object[]{"Crispy Chicken", 250, false},
+                new Object[]{"Chicken Manchurian", 250, false},
+                new Object[]{"Garlic Chicken", 250, false},
+                new Object[]{"Chicken Ala King", 290, false},
+                new Object[]{"Chicken Hakka Noodles", 180, false}
+            );
+
+            // DELIVERY MENU - Vegetarian
+            order = seedMenuCategory("Delivery - Vegetarian", order,
+                new Object[]{"Dal Fry", 150, true},
+                new Object[]{"Veg Kadai", 200, true},
+                new Object[]{"Gobi Manchurian", 200, true},
+                new Object[]{"Paneer Chilly", 250, true},
+                new Object[]{"Paneer Kadai", 250, true},
+                new Object[]{"Paneer Butter Masala", 250, true},
+                new Object[]{"Chaana Masala", 200, true},
+                new Object[]{"Aloo Gobi", 200, true},
+                new Object[]{"Veg Hakka Noodles", 180, true},
+                new Object[]{"Chips", 120, true},
+                new Object[]{"Veg Crispy", 180, true}
+            );
+
+            // DELIVERY MENU - Rice
+            order = seedMenuCategory("Delivery - Rice", order,
+                new Object[]{"Steam Rice", 80, true},
+                new Object[]{"Jeera Rice", 150, true},
+                new Object[]{"Veg Fried Rice", 180, true},
+                new Object[]{"Chicken Fried Rice", 180, false},
+                new Object[]{"Veg Biryani", 200, true},
+                new Object[]{"Chicken Biryani", 250, false},
+                new Object[]{"Sausage Pulao", 200, false},
+                new Object[]{"Veg Pulao", 150, true},
+                new Object[]{"Prawn Fried Rice", 200, false},
+                new Object[]{"Mix Fried Rice", 200, false}
+            );
+
+            // DELIVERY MENU - Soup & Extras
+            order = seedMenuCategory("Delivery - Soup & Extras", order,
+                new Object[]{"Manchow Soup (Veg/Chicken)", 150, true},
+                new Object[]{"Hot & Sour Soup (Veg/Chicken)", 150, true},
+                new Object[]{"Chapati", 20, true}
+            );
+
             logger.info("Menu items seeded: {} items", order - 1);
         }
     }

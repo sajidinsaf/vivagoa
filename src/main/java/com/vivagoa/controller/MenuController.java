@@ -24,7 +24,7 @@ public class MenuController {
     @GetMapping("/menu")
     public String menu(Model model) {
         Map<String, List<MenuItem>> menuByCategory = menuService.getMenuGroupedByCategory();
-        model.addAttribute("menuByCategory", menuByCategory);
+        model.addAttribute("menuItems", menuByCategory);
         contactService.getContactInfo().ifPresent(info -> model.addAttribute("contactInfo", info));
         return "menu";
     }

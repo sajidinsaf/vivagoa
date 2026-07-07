@@ -26,107 +26,138 @@
 <section class="section-padding bg-light-vg">
     <div class="container">
 
-        <!-- Category Filter Pills -->
-        <div class="text-center mb-5 fade-up">
-            <div class="menu-filter-pills">
-                <button class="menu-pill active" data-filter="all">All</button>
-                <button class="menu-pill" th:each="category : ${menuItems?.keySet()}"
-                        th:if="${!#strings.startsWith(category, 'Delivery')}"
-                        th:data-filter="${#strings.replace(#strings.toLowerCase(category), ' ', '-')}"
-                        th:text="${category}">Category</button>
-            </div>
+        <!-- ===== DINE-IN / DELIVERY TABS ===== -->
+        <div class="text-center mb-4 fade-up">
+            <ul class="nav nav-tabs menu-tabs justify-content-center" id="menuTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="dinein-tab" data-bs-toggle="tab" data-bs-target="#dinein-pane"
+                            type="button" role="tab" aria-controls="dinein-pane" aria-selected="true">
+                        <i class="fas fa-utensils me-2"></i>Dine-In Menu
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="delivery-tab" data-bs-toggle="tab" data-bs-target="#delivery-pane"
+                            type="button" role="tab" aria-controls="delivery-pane" aria-selected="false">
+                        <i class="fas fa-motorcycle me-2"></i>Delivery Menu
+                    </button>
+                </li>
+            </ul>
         </div>
 
-        <!-- ===== DINE-IN MENU ===== -->
-        <div th:if="${menuItems != null}">
-            <div th:each="entry : ${menuItems}" class="menu-category-block fade-up"
-                 th:if="${!#strings.startsWith(entry.key, 'Delivery')}"
-                 th:data-category="${#strings.replace(#strings.toLowerCase(entry.key), ' ', '-')}">
-                <div class="menu-category-header">
-                    <h3 th:text="${entry.key}">Category Name</h3>
-                    <div class="accent-line-left" style="margin:0 0 0 0;"></div>
-                </div>
-                <div class="row g-3">
-                    <div class="col-lg-6" th:each="item : ${entry.value}">
-                        <div class="menu-item-card">
-                            <div class="d-flex align-items-start">
-                                <span class="veg-indicator me-2"
-                                      th:classappend="${item.vegetarian} ? 'veg' : 'non-veg'"
-                                      th:title="${item.vegetarian} ? 'Vegetarian' : 'Non-Vegetarian'">
-                                    <span class="dot"></span>
-                                </span>
-                                <img th:if="${item.galleryImage != null}"
-                                     th:src="@{'/images/gallery/' + ${item.galleryImage.fileName}}" th:alt="${item.name}"
-                                     class="menu-item-thumb me-3"/>
-                                <div class="flex-grow-1">
-                                    <div class="d-flex justify-content-between align-items-baseline">
-                                        <h6 class="menu-item-name mb-0" th:text="${item.name}">Item Name</h6>
-                                        <span class="menu-item-price"
-                                              th:text="${item.price != null and item.price.compareTo(T(java.math.BigDecimal).ZERO) > 0}
-                                                  ? '&#x20B9; ' + ${#numbers.formatDecimal(item.price, 0, 0)}
-                                                  : 'As Per Size'">
-                                            Price
-                                        </span>
-                                    </div>
-                                    <p class="menu-item-desc mb-0" th:if="${item.description != null}"
-                                       th:text="${item.description}">Description</p>
-                                </div>
-                            </div>
-                        </div>
+        <div class="tab-content" id="menuTabContent">
+
+            <!-- ===== DINE-IN TAB ===== -->
+            <div class="tab-pane fade show active" id="dinein-pane" role="tabpanel" aria-labelledby="dinein-tab">
+
+                <!-- Category Filter Pills -->
+                <div class="text-center mb-5 fade-up">
+                    <div class="menu-filter-pills">
+                        <button class="menu-pill active" data-filter="all">All</button>
+                        <button class="menu-pill" th:each="category : ${menuItems?.keySet()}"
+                                th:if="${!#strings.startsWith(category, 'Delivery')}"
+                                th:data-filter="${#strings.replace(#strings.toLowerCase(category), ' ', '-')}"
+                                th:text="${category}">Category</button>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Fallback when no data -->
-        <div th:if="${menuItems == null}" class="text-center py-5">
-            <i class="fas fa-utensils fa-3x text-muted mb-3" style="display:block;"></i>
-            <h4 class="text-muted">Menu coming soon</h4>
-            <p class="text-muted">Please call us for our current menu.</p>
-        </div>
-
-        <!-- ===== DELIVERY MENU SECTION ===== -->
-        <div th:if="${menuItems != null}" class="mt-5 pt-4 fade-up" style="border-top: 3px solid var(--primary);">
-            <div class="text-center mb-4">
-                <div class="d-inline-flex align-items-center gap-3 mb-2">
-                    <i class="fas fa-motorcycle fa-2x text-primary-vg"></i>
-                    <h2 class="section-title mb-0">Delivery Menu</h2>
-                </div>
-                <p class="text-muted">Order from the comfort of your home. Call us at
-                    <a href="tel:+919822483869" class="text-primary-vg fw-bold">98224 83869</a> or
-                    WhatsApp <a href="tel:+919822483868" class="text-primary-vg fw-bold">98224 83868</a>
-                </p>
-            </div>
-
-            <div th:each="entry : ${menuItems}" class="menu-category-block fade-up"
-                 th:if="${#strings.startsWith(entry.key, 'Delivery')}">
-                <div class="menu-category-header">
-                    <h3 th:text="${#strings.replace(entry.key, 'Delivery - ', '')}">Category Name</h3>
-                    <div class="accent-line-left" style="margin:0 0 0 0;"></div>
-                </div>
-                <div class="row g-3">
-                    <div class="col-lg-6" th:each="item : ${entry.value}">
-                        <div class="menu-item-card" style="border-left: 3px solid var(--primary);">
-                            <div class="d-flex align-items-start">
-                                <span class="veg-indicator me-2"
-                                      th:classappend="${item.vegetarian} ? 'veg' : 'non-veg'"
-                                      th:title="${item.vegetarian} ? 'Vegetarian' : 'Non-Vegetarian'">
-                                    <span class="dot"></span>
-                                </span>
-                                <div class="flex-grow-1">
-                                    <div class="d-flex justify-content-between align-items-baseline">
-                                        <h6 class="menu-item-name mb-0" th:text="${item.name}">Item Name</h6>
-                                        <span class="menu-item-price"
-                                              th:text="'&#x20B9; ' + ${#numbers.formatDecimal(item.price, 0, 0)}">
-                                            Price
+                <div th:if="${menuItems != null}">
+                    <div th:each="entry : ${menuItems}" class="menu-category-block fade-up"
+                         th:if="${!#strings.startsWith(entry.key, 'Delivery')}"
+                         th:data-category="${#strings.replace(#strings.toLowerCase(entry.key), ' ', '-')}">
+                        <div class="menu-category-header">
+                            <h3 th:text="${entry.key}">Category Name</h3>
+                            <div class="accent-line-left" style="margin:0 0 0 0;"></div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-lg-6" th:each="item : ${entry.value}">
+                                <div class="menu-item-card">
+                                    <div class="d-flex align-items-start">
+                                        <span class="veg-indicator me-2"
+                                              th:classappend="${item.vegetarian} ? 'veg' : 'non-veg'"
+                                              th:title="${item.vegetarian} ? 'Vegetarian' : 'Non-Vegetarian'">
+                                            <span class="dot"></span>
                                         </span>
+                                        <img th:if="${item.galleryImage != null}"
+                                             th:src="@{'/images/gallery/' + ${item.galleryImage.fileName}}" th:alt="${item.name}"
+                                             class="menu-item-thumb me-3"/>
+                                        <div class="flex-grow-1">
+                                            <div class="d-flex justify-content-between align-items-baseline">
+                                                <h6 class="menu-item-name mb-0" th:text="${item.name}">Item Name</h6>
+                                                <span class="menu-item-price"
+                                                      th:text="${item.price != null and item.price.compareTo(T(java.math.BigDecimal).ZERO) > 0}
+                                                          ? '&#x20B9; ' + ${#numbers.formatDecimal(item.price, 0, 0)}
+                                                          : 'As Per Size'">
+                                                    Price
+                                                </span>
+                                            </div>
+                                            <p class="menu-item-desc mb-0" th:if="${item.description != null}"
+                                               th:text="${item.description}">Description</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Fallback when no data -->
+                <div th:if="${menuItems == null}" class="text-center py-5">
+                    <i class="fas fa-utensils fa-3x text-muted mb-3" style="display:block;"></i>
+                    <h4 class="text-muted">Menu coming soon</h4>
+                    <p class="text-muted">Please call us for our current menu.</p>
+                </div>
             </div>
+
+            <!-- ===== DELIVERY TAB ===== -->
+            <div class="tab-pane fade" id="delivery-pane" role="tabpanel" aria-labelledby="delivery-tab">
+
+                <div class="text-center mb-4 fade-up">
+                    <p class="text-muted" style="max-width:600px; margin:0 auto;">
+                        Order from the comfort of your home. Call us at
+                        <a href="tel:+919822483869" class="text-primary-vg fw-bold">98224 83869</a> or
+                        WhatsApp <a href="tel:+919822483868" class="text-primary-vg fw-bold">98224 83868</a>
+                    </p>
+                </div>
+
+                <div th:if="${menuItems != null}">
+                    <div th:each="entry : ${menuItems}" class="menu-category-block fade-up"
+                         th:if="${#strings.startsWith(entry.key, 'Delivery')}">
+                        <div class="menu-category-header">
+                            <h3 th:text="${#strings.replace(entry.key, 'Delivery - ', '')}">Category Name</h3>
+                            <div class="accent-line-left" style="margin:0 0 0 0;"></div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-lg-6" th:each="item : ${entry.value}">
+                                <div class="menu-item-card" style="border-left: 3px solid var(--primary);">
+                                    <div class="d-flex align-items-start">
+                                        <span class="veg-indicator me-2"
+                                              th:classappend="${item.vegetarian} ? 'veg' : 'non-veg'"
+                                              th:title="${item.vegetarian} ? 'Vegetarian' : 'Non-Vegetarian'">
+                                            <span class="dot"></span>
+                                        </span>
+                                        <div class="flex-grow-1">
+                                            <div class="d-flex justify-content-between align-items-baseline">
+                                                <h6 class="menu-item-name mb-0" th:text="${item.name}">Item Name</h6>
+                                                <span class="menu-item-price"
+                                                      th:text="'&#x20B9; ' + ${#numbers.formatDecimal(item.price, 0, 0)}">
+                                                    Price
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fallback when no delivery data -->
+                <div th:if="${menuItems == null}" class="text-center py-5">
+                    <i class="fas fa-motorcycle fa-3x text-muted mb-3" style="display:block;"></i>
+                    <h4 class="text-muted">Delivery menu coming soon</h4>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
@@ -138,6 +169,36 @@
 <div th:replace="~{fragments/layout :: scripts}"></div>
 
 <style>
+    /* ===== Menu Tabs ===== */
+    .menu-tabs {
+        border-bottom: 2px solid #e0e0e0;
+        gap: 0;
+    }
+    .menu-tabs .nav-link {
+        color: #666;
+        font-family: 'Playfair Display', serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        padding: .75rem 2rem;
+        border: none;
+        border-bottom: 3px solid transparent;
+        border-radius: 0;
+        transition: all .3s;
+    }
+    .menu-tabs .nav-link:hover {
+        color: var(--primary);
+        border-color: transparent;
+    }
+    .menu-tabs .nav-link.active {
+        color: var(--primary);
+        background: transparent;
+        border-color: transparent;
+        border-bottom: 3px solid var(--primary);
+    }
+    @media (max-width: 768px) {
+        .menu-tabs .nav-link { font-size: 1rem; padding: .6rem 1.25rem; }
+    }
+
     /* ===== Filter Pills ===== */
     .menu-filter-pills {
         display: flex;
